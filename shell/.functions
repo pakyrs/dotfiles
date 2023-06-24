@@ -1,0 +1,20 @@
+## SSH - enter password for keys once!
+# SSH_ENV=$HOME/.ssh/environment
+   
+# function ssh-add-keys {
+#     # Find all private keys in the default key directory
+#     for keyfile in ~/.ssh/*; do
+#         # Skip non-private key files
+#         if [[ ! -f "$keyfile" || "$keyfile" == *.pub ]]; then
+#             continue
+#         fi
+#         # Add the key to the ssh-agent
+#         ssh-add "$keyfile"
+#     done
+# }
+
+# mv with progress
+mvpow() {
+    pv "$1" | printf "%q\n" | xargs -I{} mv {} "$2"
+}
+

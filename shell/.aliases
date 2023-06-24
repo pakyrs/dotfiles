@@ -1,0 +1,94 @@
+# # ex - archive extractor
+# # usage: ex <file>
+ex ()
+{
+  if [ -f $1 ] ; then
+    case $1 in
+      *.tar.bz2)   tar xjf $1   ;;
+      *.tar.gz)    tar xzf $1   ;;
+      *.tar.xz)    tar xJf $1   ;;
+      *.bz2)       bunzip2 $1   ;;
+      *.rar)       unrar x $1   ;;
+      *.gz)        gunzip $1    ;;
+      *.tar)       tar xf $1    ;;
+      *.tbz2)      tar xjf $1   ;;
+      *.tgz)       tar xzf $1   ;;
+      *.zip)       unzip $1     ;;
+      *.Z)         uncompress $1;;
+      *.7z)        7z x $1      ;;
+      *)           echo "'$1' cannot be extracted via ex()" ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+}
+# TAR
+alias crytar='function _encrypt_tar() { if [ -z "$1" ]; then echo "No files or directories specified."; else tar -czvf - "$1" | openssl enc -aes-256-cbc -e > encrypted.tar.gz; fi }; _encrypt_tar'
+
+# GENERAL
+alias ll='exa -lah'
+alias ls='exa -l'
+alias arch-upgrade='cd ~ && rm -rf rtw89 && git clone https://github.com/lwfinger/rtw89.git && sudo pacman -Syu && paru -Syu'
+alias qdbus='qdbus-qt5'
+alias trash='rm -rf ~/.local/share/Trash/*'
+
+# RC Files
+alias zrc='source ~/.zshrc'
+alias brc='source ~/.bashrc'
+
+# GIT aliases
+alias Commit='git add .; git commit -m "Commit from $(hostname)"; git push origin master'
+alias push='git add -u; git commit -m "from $(hostname)"; git push -f origin master'
+
+# YADM
+alias yapush='yadm add -u; yadm commit -m "from $(hostname)"; yadm push -f origin master'
+alias yapull='yadm reset --hard origin/master; yadm pull && yadm status'
+alias yagent='eval "$(ssh-agent -s)" && ssh-add ~/.ssh/github'
+alias yastat='yadm status'
+
+# CONVENIENCE
+alias keys='eval "$(ssh-agent -s)"; ssh-add -K ~/.ssh/github ~/.ssh/wit_key ~/.ssh/id_ed25519'
+alias nodns='ping 8.8.8.8'
+alias dns='ping google.com'
+alias lip='ip -o -f inet -c a | awk "{print \$1,\$2,\$4}"'
+alias hostscan='nmap -sP $@'
+alias grep='grep --color=auto'
+#alias vim='nvim'
+alias killer='ps aux | fzf | awk "{print $2}" | xargs kill PID'
+alias fd='find . -type d -iname'
+alias ff='find . -type f -iname'
+alias shauce='if [ "$SHELL" = "/bin/zsh" ]; then source ~/.zshrc; elif [ "$SHELL" = "/bin/bash" ]; then source ~/.bashrc; elif [ "$SHELL" = "/usr/bin/fish" ]; then source ~/.config/fish/config.fish; fi'
+alias audio_reboot='killall pipewire && systemctl --user --now enable pipewire{,-pulse}.{socket,service}'
+
+# OCR - FLAMESHOT
+alias ocr='flameshot gui --raw | tesseract stdin stdout | xclip -in -selection clipboard'
+
+# SSH
+alias ssagent='eval $(ssh-agent) && ssh-add ~/.ssh/id_ed25519 && ssh-add ~/.ssh/github && ssh-add ~/.ssh/wit_key'
+
+# NIX
+alias nix-in='nix-env -iA nixpkgs.$@'
+
+# DEBIAN
+alias aptup='sudo apt update -y && sudo apt dist-upgrade && flatpak update -y'
+alias aptrm='sudo apt remove --purge'
+alias winbox='wine /home/pacadmin/Downloads/winbox64.exe'
+
+# BTRFS
+alias btrfs-mount='sudo mount $(df --output=source / | tail -n 1) -o subvol=/ /mnt'
+alias btrfs-umount='sudo umount $(df --output=source / | tail -n 1) /mnt'
+alias btrfs-rollback='sudo mv /mnt/@ /mnt/@_badroot && sudo btrfs subvolume snapshot /mnt/@.snapshots/$@/snapshot /mnt/@'
+alias snapper-snap='sudo snapper create --type single --print-number --cleanup-algorithm number'
+
+#KITTY
+alias icat="kitty +kitten icat"
+[ "$TERM" = "xterm-kitty" ] && alias ssh="kitty +kitten ssh"
+
+# Dcker
+alias Compose='docker-compose up -d && docker-compose logs -f'
+
+## ARCH SSH ISSUE
+alias arch-ssh='eval "$(ssh-agent -s)" && ssh-add /home/pacadmin/.ssh/wit_key'
+
+## PLASMA
+alias plasma-restart="DISPLAY=:0 kwin --replace ; sleep 2 ; plasmashell --replace &"
