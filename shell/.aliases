@@ -41,18 +41,13 @@ alias ll='exa -lah'
 alias ls='exa -l'
 alias qdbus='qdbus-qt5'
 alias trash='rm -rf ~/.local/share/Trash/*'
-alias tar-encrypt='function _encrypt_tar() { if [ -z "$1" ]; then echo "No files
 
 # -- GIT ------------------------------------------------------------
 alias Commit='git add .; git commit -m "Commit from $(hostname)"; git push -f origin master'
 
-# -- YADM ------------------------------------------------------------
-alias yapush='yadm add -u; yadm commit -m "from $(hostname)"; yadm push -f origin master'
-alias yapull='yadm reset --hard origin/master; yadm pull && yadm status'
-alias yagent='eval "$(ssh-agent -s)" && ssh-add ~/.ssh/github'
-alias yastat='yadm status'
-alias yacry='yadm encrypt && yapush'
-alias yadecry='yapull && yadm decrypt'
+# -- STOW ------------------------------------------------------------
+alias dotpull='cd ~/dotfiles && git pull && stow -Rv */'
+alias dotpush='cd ~/dotfiles && Commit'
 
 # -- DEBIAN ------------------------------------------------------------
 alias aptup='sudo apt update -y && sudo apt dist-upgrade && flatpak update -y'
