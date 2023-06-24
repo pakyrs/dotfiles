@@ -41,7 +41,7 @@ alias ll='exa -lah'
 alias ls='exa -l'
 alias qdbus='qdbus-qt5'
 alias trash='rm -rf ~/.local/share/Trash/*'
-alias crytar='function _encrypt_tar() { if [ -z "$1" ]; then echo "No files
+alias tar-encrypt='function _encrypt_tar() { if [ -z "$1" ]; then echo "No files
 
 # -- GIT ------------------------------------------------------------
 alias Commit='git add .; git commit -m "Commit from $(hostname)"; git push origin master'
