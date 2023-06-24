@@ -18,3 +18,13 @@ mvpow() {
     pv "$1" | printf "%q\n" | xargs -I{} mv {} "$2"
 }
 
+## Automatically open latest tmux session or create a new one
+#if command -v tmux >/dev/null 2>&1; then
+#  if [[ -z "$TMUX" ]]; then
+#    if tmux has-session >/dev/null 2>&1; then
+#      tmux attach-session -d
+#    else
+#      tmux new-session
+#    fi
+#  fi
+#fi

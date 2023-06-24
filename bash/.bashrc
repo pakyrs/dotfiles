@@ -1,19 +1,32 @@
+# -- VARIABLES ----------------------------------------------------------
 export TERM=xterm-256color
 export LC_CTYPE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
 
-# EXTERNAL ALIASES
+# prevent GPG from being confused on where to read input from
+export GPG_TTY=$(tty)
+
+# -- ALIASES ------------------------------------------------------------
 if [ -f ~/.aliases ]; then
     . ~/.aliases
 fi
 
-# Functions
+# -- FUNCTIONS ----------------------------------------------------------
 #if [ -f ~/.functions ]; then
  #   . ~/.functions
 #fi	
+
+# -- PROMPT --------------------------------------------------------------
+if [ "$HOSTNAME" == "docker" ]; then
+        # set the Docker theme
+        PS1='🐳  \[\033[1;36m\]\h \[\033[1;34m\]\W\[\033[0;35m\] \[\033[1;36m\]'
+        alias vpncheck='python3 /STORAGE/docker/vpn-jackett-qbit/vpncheck.py'
+        cd /STORAGE/docker
+        vpncheck
+    else
+        # WIT THEME
+        PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+fi
 
 # If not running interactively, don't do anything
 case $- in
@@ -69,9 +82,6 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
-# WIT THEME
-# Set root shell red
-PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -86,9 +96,3 @@ fi
 
 # load neofetch
 neofetch
-
-# Start ssh-agent
-eval "$(ssh-agent -s)"
-# Add default private key
-ssh-add ~/.ssh/github
-ssh-add ~/.ssh/wit_key
