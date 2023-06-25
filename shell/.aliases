@@ -37,10 +37,26 @@ alias ff='find . -type f -iname'
 alias shauce='if [ "$SHELL" = "/bin/zsh" ]; then source ~/.zshrc; elif [ "$SHELL" = "/bin/bash" ]; then source ~/.bashrc; elif [ "$SHELL" = "/usr/bin/fish" ]; then source ~/.config/fish/config.fish; fi'
 # OCR - FLAMESHOT
 alias ocr='flameshot gui --raw | tesseract stdin stdout | xclip -in -selection clipboard'
-alias ll='exa -lah'
-alias ls='exa -l'
+# Changing "ls" to "exa"
+alias ls='exa -al --color=always --group-directories-first' # my preferred listing
+alias la='exa -a --color=always --group-directories-first'  # all files and dirs
+alias ll='exa -lah --color=always --group-directories-first'  # long format
+alias lt='exa -aT --color=always --group-directories-first' # tree listing
+alias l.='exa -a | egrep "^\."'
 alias qdbus='qdbus-qt5'
 alias trash='rm -rf ~/.local/share/Trash/*'
+# Colorize grep output (good for log files)
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+
+# confirm before overwriting something
+alias cp="cp -i"
+alias mv='mv -i'
+alias rm='rm -i'
+# get error messages from journalctl
+alias jctl="journalctl -p 3 -xb"
+
 
 # -- GIT ------------------------------------------------------------
 alias Commit='git add .; git commit -m "Commit from $(hostname)"; git push -f origin master'
@@ -48,7 +64,7 @@ alias Commit='git add .; git commit -m "Commit from $(hostname)"; git push -f or
 # -- STOW ------------------------------------------------------------
 alias dotpull='cd ~/dotfiles && git pull && stow -Rv */'
 alias dotpush='cd ~/dotfiles && Commit'
-
+alias dotstat='cd ~/dotfiles && git status'
 # -- DEBIAN ------------------------------------------------------------
 alias aptup='sudo apt update -y && sudo apt dist-upgrade && flatpak update -y'
 alias aptrm='sudo apt remove --purge'
