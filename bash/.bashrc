@@ -12,9 +12,9 @@ if [ -f ~/.aliases ]; then
 fi
 
 # -- FUNCTIONS ----------------------------------------------------------
-#if [ -f ~/.functions ]; then
- #   . ~/.functions
-#fi	
+if [ -f ~/.functions ]; then
+    . ~/.functions
+fi	
 
 # -- PROMPT --------------------------------------------------------------
 if [ "$HOSTNAME" == "docker" ]; then

@@ -9,6 +9,7 @@ export TERM=xterm-256color
 export LC_CTYPE=en_GB.UTF-8
 #export LC_ALL=en_GB.UTF-8
 
+# aliases
 [ -f "$HOME/.aliases" ] && source "$HOME/.aliases"
 
 # Functions
@@ -43,6 +44,12 @@ bindkey '^[[6~' end-of-buffer-or-history          # page down
 bindkey '^[[H' beginning-of-line                  # home
 bindkey '^[[F' end-of-line                        # end
 bindkey '^[[Z' undo                               # shift + tab undo last action
+
+# Load Zsh-syntax-highlighting plugin
+source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Load Zsh-autosuggestions plugin
+source $HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # enable completion features
 autoload -Uz compinit

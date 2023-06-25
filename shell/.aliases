@@ -65,6 +65,8 @@ alias Commit='git add .; git commit -m "Commit from $(hostname)"; git push -f or
 alias dotpull='cd ~/dotfiles && git pull && stow -Rv */'
 alias dotpush='cd ~/dotfiles && Commit'
 alias dotstat='cd ~/dotfiles && git status'
+alias dotupdate='cd ~/dotfiles && stow -Rv */'
+
 # -- DEBIAN ------------------------------------------------------------
 alias aptup='sudo apt update -y && sudo apt dist-upgrade && flatpak update -y'
 alias aptrm='sudo apt remove --purge'
