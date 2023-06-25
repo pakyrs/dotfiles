@@ -115,5 +115,8 @@ if [ -f ~/.functions ]; then
     . ~/.functions
 fi
 
+# enable tabbing of hidden folders and files
+setopt glob_dots
+
 neofetch
 eval "$(starship init zsh)"
