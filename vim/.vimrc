@@ -1,5 +1,5 @@
 "set mouse=r                       " remove mouse support - helps with copy paste"
-:set mouse=nicr
+"set mouse=nicr
 :nmap <F12> :set invnumber<CR>    " Toggle line numbers on/ off using F12"
 :set paste                         " fix pasting feom yml or code to avoid spaces"
 set nocompatible                  " Must come first because it changes other options. Dont try to be vi compatible"
@@ -57,3 +57,7 @@ set statusline=%<%f%=\ [%1*%M%*%n%R%H]\ %19(%2c\ c:%3o\ l:%3l/%-3L\ %)
 "colorscheme topfunky-light
 set background=dark
 
+" DRACULA THEME
+packadd! dracula
+syntax enable
+colorscheme dracula
