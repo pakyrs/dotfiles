@@ -4,6 +4,19 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
+# DRACULA Manpager
+export MANPAGER="/usr/bin/less -s -M +Gg"       #standard linux
+#export MANPAGER="/opt/homebrew/bin/less -s -M +Gg" #M1 macOS
+#man-page colors
+        export LESS_TERMCAP_mb=$'\e[1;31m'      # begin bold
+        export LESS_TERMCAP_md=$'\e[1;34m'      # begin blink
+        export LESS_TERMCAP_so=$'\e[01;45;37m'  # begin reverse video
+        export LESS_TERMCAP_us=$'\e[01;36m'     # begin underline
+        export LESS_TERMCAP_me=$'\e[0m'         # reset bold/blink
+        export LESS_TERMCAP_se=$'\e[0m'         # reset reverse video
+        export LESS_TERMCAP_ue=$'\e[0m'         # reset underline
+        export GROFF_NO_SGR=1                   # for konsole
+
 # DRACULA THEME FOR ZSH SYNTAX HIGHLIGHTING
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main cursor)
 typeset -gA ZSH_HIGHLIGHT_STYLES
@@ -150,7 +163,8 @@ ZSH_THEME="dracula/dracula"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git z zsh-autosuggestions zsh-syntax-highlighting docker npm yarn history colored-man-pages extract)
+plugins=(git z zsh-autosuggestions zsh-syntax-highlighting docker npm yarn history extract)
+# removed: colored_man_pages
 
 source $ZSH/oh-my-zsh.sh
 
@@ -199,7 +213,7 @@ fi
 setopt glob_dots
 
 #### ------------------------------
-#### exa - Color Scheme Definitions
+#### exa - Color Scheme Definitions Dracula Theme
 #### ------------------------------
 
 export EXA_COLORS="\
@@ -219,6 +233,6 @@ tr=34:\
 tw=35:\
 tx=36:"
 
-# loading
+# prompt
 neofetch
 eval "$(starship init zsh)"

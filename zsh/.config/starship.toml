@@ -1,52 +1,53 @@
+#format = '$os $username$hostname:$directory $cmd_duration'
+#format = """
+#$username$hostname$directory$docker_context$git_status$git_state$python$java$cmd_duration\
+#$line_break\
+#$os$character
+#"""
 #format = """
 #[╭─user───❯](bold blue) $username
 #[┣─system─❯](bold yellow) $hostname
 #[┣─project❯](bold red) $directory$rust$git_branch$git_state$git_status$package$golang$terraform$docker_context$python$docker_context$nodejs
 #[╰─cmd────❯](bold green)
 #"""
+
+[os]
+#format = "[($symbol $version)]($style)"
+format = "$symbol($style)"
+style = "purple"
+disabled = false
+
 [username]
-style_user = "green bold"
-style_root = "red bold"
+style_user = "bold #50fa7b" # Dracula green
+style_root = "bold #ff5555" # Dracula red
 format = "[$user]($style) "
 disabled = false
 show_always = true
 
 [hostname]
 ssh_only = false
-format = 'on [$hostname](bold purple) '
+format = 'on [$hostname](bold #bd93f9) ' # Dracula purple
 trim_at = "."
 disabled = false
 
-# Replace the "❯" symbol in the prompt with "➜"
-[character]                            # The name of the module we are configuring is "character"
-success_symbol = "[➜](bold green)"     # The "success_symbol" segment is being set to "➜" with the color "bold green"
-error_symbol = "[✗](bold red)"
+# Replace the "❯" symbol in the prompt with "➜" and uses Dracula colors
+[character]                          
+error_symbol = "[✗](bold #ff5555)" # Dracula red
+success_symbol = "[➜](bold #50fa7b)" # Draci;a green
 
-#  
 # configure directory
 [directory]
 read_only = " "
 truncation_length = 10
 truncate_to_repo = true # truncates directory to root folder if in github repo
-style = "bold italic blue"
+style = "bold italic #6272a4" # Dracula indigo
 
 [cmd_duration]
 min_time = 4
 show_milliseconds = false
 disabled = false
-style = "bold italic red"
-
-[aws]
-symbol = "  "
-
-[conda]
-symbol = " "
-
-[dart]
-symbol = " "
-
-#[directory]
-#read_only = " "
+#style = "bold italic red"
+style = "bold italic #ff5555" # Dracula red
 
 [docker_context]
 symbol = " "
@@ -57,36 +58,60 @@ detect_files = ["docker-compose.yml", "docker-compose.yaml", "Dockerfile"]
 detect_folders = []
 disabled = false
 
+[git_branch]
+style = "bold #ff79c6" # Dracula theme
+
+[git_status]
+format = '([\[$all_status$ahead_behind\]]($style) )'
+stashed = "[${count}*](green)"
+modified = "[${count}+](yellow)"
+deleted =  "[${count}-](red)"
+conflicted =  "[${count}~](red)"
+ahead = "⇡${count}"
+behind = "⇣${count}"
+untracked = "[${count}?](blue)"
+staged = "[${count}+](green)"
+style = "bold #ff5555" # Dracula theme
+
+[git_state]
+style =  "bold red"
+format = "[$state( $progress_current/$progress_total) ]($style)"
+rebase = "rebase"
+merge = "merge"
+revert = "revert"
+cherry_pick = "cherry"
+bisect = "bisect"
+am = "am"
+am_or_rebase = "am/rebase"
+
+[python]
+symbol = "🐍 "
+#pyenv_version_name = true
+format = 'via [${symbol}python (${version} )(\($virtualenv\) )]($style)'
+style = "bold yellow"
+pyenv_prefix = "venv "
+python_binary = ["./venv/bin/python", "python", "python3", "python2"]
+detect_extensions = ["py"]
+version_format = "v${raw}"
+
 [elixir]
 symbol = " "
 
 [elm]
 symbol = " "
 
-[git_branch]
-symbol = " "
+[aws]
+symbol = " "
+style = "bold #ffb86c"
 
-[git_status]
-format = '([\[$all_status$ahead_behind\]]($style) )'
-stashed = "[${count}*](green)" 
-modified = "[${count}+](yellow)" 
-deleted =  "[${count}-](red)" 
-conflicted =  "[${count}~](red)" 
-ahead = "⇡${count}"
-behind = "⇣${count}"
-untracked = "[${count}?](blue)" 
-staged = "[${count}+](green)" 
+[conda]
+symbol = " "
 
-[git_state]
-style =	"bold red"
-format = "[$state( $progress_current/$progress_total) ]($style)"
-rebase = "rebase"
-merge = "merge"	
-revert = "revert"	
-cherry_pick = "cherry"
-bisect = "bisect"	
-am = "am"	
-am_or_rebase = "am/rebase"
+[dart]
+symbol = " "
+
+#[git_branch]
+#symbol = " "
 
 [golang]
 symbol = " "
@@ -96,6 +121,8 @@ symbol = " "
 
 [java]
 symbol = " "
+style = "bg:#86BBD8"
+format = '[[ $symbol ($version) ](bg:#86BBD8)]($style)'
 
 [julia]
 symbol = " "
@@ -121,21 +148,13 @@ symbol = " "
 [php]
 symbol = " "
 
-[python]
-symbol = "🐍 "
-#pyenv_version_name = true
-format = 'via [${symbol}python (${version} )(\($virtualenv\) )]($style)'
-style = "bold yellow"
-pyenv_prefix = "venv "
-python_binary = ["./venv/bin/python", "python", "python3", "python2"]
-detect_extensions = ["py"]
-version_format = "v${raw}"
-
 [ruby]
 symbol = " "
 
 [rust]
 symbol = " "
+style = "bg:#86BBD8"
+format = '[[ $symbol ($version) ](bg:#86BBD8)]($style)'
 
 [scala]
 symbol = " "
@@ -151,6 +170,7 @@ format = "via [ Node.js $version](bold green) "
 detect_files = ["package.json", ".node-version"]
 detect_folders = ["node_modules"]
 
+# custom os symbols by default starship has emojis
 [os.symbols]
 Alpaquita = " "
 Alpine = " "
