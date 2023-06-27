@@ -163,8 +163,26 @@ ZSH_THEME="dracula/dracula"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git z zsh-autosuggestions zsh-syntax-highlighting docker npm yarn history extract)
-# removed: colored_man_pages
+plugins=(git 
+         z
+         zsh-completions 
+         zsh-autosuggestions 
+         zsh-syntax-highlighting 
+         docker 
+         npm 
+         yarn 
+         history 
+         extract
+         sudo # esc esc
+         web-search
+         copyfile
+         copybuffer # ctro-o
+         dirhistory # alt-arrows
+         zsh-history-substring-search
+         you-should-use
+)
+
+# removed: colored_man_pages as dracula theme is active on less
 
 source $ZSH/oh-my-zsh.sh
 
@@ -237,21 +255,3 @@ tx=36:"
 neofetch
 eval "$(starship init zsh)"
 
-check_git_status() {
-  local repo_path="$HOME/dotfiles"  # Specify the path to your Git repository
-  local branch
-  
-  if cd "$repo_path"; then
-    branch="$(git symbolic-ref --short HEAD 2>/dev/null)"
-    if [[ -n "$branch" ]]; then
-      git fetch origin >/dev/null 2>&1
-      local ahead="$(git rev-list --count HEAD..origin/"$branch")"
-      if [[ "$ahead" -gt 0 ]]; then
-        echo "Your branch '$branch' in '$repo_path' is $ahead commit(s) behind the remote."
-      fi
-    fi
-  fi
-}
-
-
-check_git_status
