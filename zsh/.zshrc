@@ -236,3 +236,22 @@ tx=36:"
 # prompt
 neofetch
 eval "$(starship init zsh)"
+
+check_git_status() {
+  local repo_path="$HOME/dotfiles"  # Specify the path to your Git repository
+  local branch
+  
+  if cd "$repo_path"; then
+    branch="$(git symbolic-ref --short HEAD 2>/dev/null)"
+    if [[ -n "$branch" ]]; then
+      git fetch origin >/dev/null 2>&1
+      local ahead="$(git rev-list --count HEAD..origin/"$branch")"
+      if [[ "$ahead" -gt 0 ]]; then
+        echo "Your branch '$branch' in '$repo_path' is $ahead commit(s) behind the remote."
+      fi
+    fi
+  fi
+}
+
+
+check_git_status
