@@ -39,11 +39,12 @@ alias shauce='if [ "$SHELL" = "/bin/zsh" ]; then source ~/.zshrc; elif [ "$SHELL
 # OCR - FLAMESHOT
 alias ocr='flameshot gui --raw | tesseract stdin stdout | xclip -in -selection clipboard'
 # Changing "ls" to "exa"
-alias ls='exa -al --color=always --group-directories-first' # my preferred listing
-alias la='exa -a --color=always --group-directories-first'  # all files and dirs
-alias ll='exa -lah --color=always --group-directories-first'  # long format
-alias lt='exa -aT --color=always --group-directories-first' # tree listing
+alias ls='exa -al --icons --color=always --group-directories-first' # my preferred listing
+alias la='exa -a --icons --color=always --group-directories-first'  # all files and dirs
+alias ll='exa -lah --icons --color=always --group-directories-first'  # long format
+alias lt='exa -aT --icons --color=always --group-directories-first' # tree listing
 alias l.='exa -a | egrep "^\."'
+
 alias qdbus='qdbus-qt5'
 alias trash='rm -rf ~/.local/share/Trash/*'
 # Colorize grep output (good for log files)
