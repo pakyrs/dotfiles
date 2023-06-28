@@ -60,6 +60,9 @@ alias rm='rm -i'
 # get error messages from journalctl
 alias jctl="journalctl -p 3 -xb"
 
+#  history | awk '{$1=""; print $0}'"
+#alias histcopy='history | awk '\''{$1=""; print $0}'\''' 
+alias histcopy='history | awk "{\$1=\"\"; print}"'
 
 # -- GIT ------------------------------------------------------------
 alias Commit='git add .; git commit -m "Commit from $(hostname)"; git push -f origin master'
