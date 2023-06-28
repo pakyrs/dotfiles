@@ -252,6 +252,7 @@ tw=35:\
 tx=36:"
 
 # prompt
-neofetch
 eval "$(starship init zsh)"
+neofetch
+dotstatus | grep 'origin/master'
 
