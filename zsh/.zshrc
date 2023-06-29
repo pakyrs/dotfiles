@@ -255,5 +255,5 @@ tx=36:"
 eval "$(starship init zsh)"
 neofetch
 
-python3 /home/pacadmin/scripts/check_and_pull/check_and_pull.py
+python3 ~/scripts/check_and_pull/check_and_pull.py
 
