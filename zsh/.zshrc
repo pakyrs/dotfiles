@@ -254,5 +254,6 @@ tx=36:"
 # prompt
 eval "$(starship init zsh)"
 neofetch
-dotstatus | grep 'origin/master'
+
+python3 /home/pacadmin/scripts/check_and_pull/check_and_pull.py
 
