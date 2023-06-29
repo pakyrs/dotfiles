@@ -2,6 +2,8 @@
 
 This is my collection of dotfiles, which includes configurations and settings for various tools and applications. It emphasizes the usage of Zsh, Oh My Zsh, Starship, and the Dracula theme to create a powerful and visually appealing terminal environment.
 
+![prompt](prompt.png)
+
 ## Prerequisites 🛠️
 
 To make the most out of this dotfiles collection, ensure that the following dependencies are installed:
@@ -38,6 +40,8 @@ brew install zsh
 ```shell
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```
+n.b.: Some of the plugins installed are outsite of ohmyzsh collection, they need to be cloned into the $ZSH_CUSTOM directory.
+
 ## 5. Install Starship:
 
 #### On macOS, use Homebrew:
@@ -77,6 +81,14 @@ chsh -s $(which zsh)
 ```
 
  Restart your terminal or start a new session to see the changes.
+
+## Extra ✨
+
+I've also created a handy script to effortlessly check and pull configurations across my devices. Feel free to explore the script [here](https://github.com/pakyrs/check_and_pull). 🚀
+
+With this script, you can easily ensure that your configurations are up to date across different devices. Simply run the script to check for updates and perform a pull if needed. It's a convenient way to keep your configurations synchronized and avoid missing out on any improvements or new features. ✨
+
+Some handy dot.. aliases are in this repo to help.
 
 ## Customization 🎨
 
