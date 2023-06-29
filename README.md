@@ -18,7 +18,7 @@ To make the most out of this dotfiles collection, ensure that the following depe
 
 1. Clone the repository:
 ```shell
-git clone https://github.com/yourusername/dotfiles.git
+git clone https://github.com/pakyrs/dotfiles.git
 ```
 2. Change to the dotfiles directory:
 ```shell
