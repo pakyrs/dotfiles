@@ -3,6 +3,13 @@
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
+# EDITORS
+export EDITOR='vim'
+export VISUAL='vim'
+export SYSTEMD_EDITOR='vim'
+export TERM=xterm-256color
+export LC_CTYPE=en_GB.UTF-8
+export LC_ALL=en_GB.UTF-8
 
 # DRACULA Manpager
 export MANPAGER="/usr/bin/less -s -M +Gg"       #standard linux
@@ -211,13 +218,6 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-# EDITORS
-export EDITOR='vim'
-export VISUAL='vim'
-export SYSTEMD_EDITOR='vim'
-export TERM=xterm-256color
-export LC_CTYPE=en_GB.UTF-8
-#export LC_ALL=en_GB.UTF-8
 
 # aliases
 [ -f "$HOME/.aliases" ] && source "$HOME/.aliases"
