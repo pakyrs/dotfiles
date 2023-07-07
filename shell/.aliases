@@ -94,8 +94,9 @@ alias compose-up='docker-compose up -d --force-recreate && docker logs -f'
 alias compose-down='docker-compose down'
 alias vpncheck='python3 /STORAGE/docker/vpn-jackett-qbit/vpncheck.py'
 
-# -- PLASMA ------------------------------------------------------------
-alias plasma-restart="DISPLAY=:0 kwin --replace ; sleep 2 ; plasmashell --replace &"
+# -- RESETS ------------------------------------------------------------
+alias plasma-reset="DISPLAY=:0 kwin --replace ; sleep 2 ; plasmashell --replace &"
+alias pipewire-reset="killall pipewire ; sleep 2;  systemctl --user --now enable pipewire{,-pulse}.{socket,service}"
 
 # -- TERMUX ------------------------------------------------------------
 alias proot="proot-distro"
