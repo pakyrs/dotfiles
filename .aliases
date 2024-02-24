@@ -1,0 +1,100 @@
+# -- GENERAL ------------------------------------------------------------
+alias vi='nvim'
+alias vim='nvim'
+alias hist='history | fzf'
+alias root="sudo su -"
+alias nodns='ping 8.8.8.8'
+alias dns='ping google.com'
+alias lip='ip -o -f inet -c a | awk "{print \$1,\$2,\$4}"'
+# Using Fish variable, since $@ workaround is the .rc files.
+alias hostscan='nmap -sP $argv'
+alias grep='grep --color=auto'
+alias killer='ps aux | fzf | awk "{print $2}" | xargs kill PID'
+alias fd='find . -type d -iname'
+alias ff='find . -type f -iname'
+alias lsblk='lsblk -f -o +SIZE,MODEL,SERIAL'
+# tree with depth in mind
+alias TR='tree -CL $@'
+# OCR - FLAMESHOT
+alias ocr='flameshot gui --raw | tesseract stdin stdout | xclip -in -selection clipboard'
+alias flamecopy='flameshot gui --raw | wl-copy'
+## Colorize outputs
+alias ll='eza -lah --icons --color=always --group-directories-first'
+alias la='eza -ah --icons --color=always --group-directories-first'
+alias ls='eza -Sh --icons --color=always --group-directories-first'
+alias ip='ip --color=auto'
+# batcat
+#alias cat='batcat -p $@'
+alias qdbus='qdbus-qt5'
+alias trash='rm -rf ~/.local/share/Trash/*'
+# Colorize grep output (good for log files)
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias CD="cd"
+# confirm before overwriting something
+alias cp="cp -i"
+alias mv='mv -i'
+alias rm='rm -i'
+# get error messages from journalctl
+alias jctl="journalctl -p 3 -xb"
+
+#  history | awk '{$1=""; print $0}'"
+#alias histcopy='history | awk '\''{$1=""; print $0}'\''' 
+alias histcopy='history | awk "{\$1=\"\"; print}"'
+
+# -- GIT ------------------------------------------------------------
+alias Commitmaster='git add .; git commit -m "Commit from $(hostname)"; git push -f origin master'
+alias Commitmain='git add .; git commit -m "Commit from $(hostname)"; git push -f origin main'
+
+# -- WINE ------------------------------------------------------------
+alias winbox='flatpak run --command=bottles-cli com.usebottles.bottles run -b 'winbox' -e "$HOME/.var/app/com.usebottles.bottles/data/bottles/bottles/winbox/drive_c/users/$USER/Desktop/winbox64.exe"'
+
+# -- STOW ------------------------------------------------------------
+alias dotpull='cd $HOME/dotfiles && git pull && stow -v --target=$HOME --restow */ && cd -'
+alias dotpush='cd $HOME/dotfiles && Commitmaster && cd -'
+alias dotstatus='cd $HOME/dotfiles ; git fetch && git status && cd -'
+alias dotupdate='cd $HOME/dotfiles && stow -Rv --target=$HOME && cd -'
+
+# -- DEBIAN ------------------------------------------------------------
+alias aptup='sudo apt update -y && sudo apt dist-upgrade && flatpak update -y'
+alias aptrm='sudo apt remove --purge'
+#alias winbox='wine /home/pacadmin/Downloads/winbox64.exe'
+
+# -- SUSE ---------------------------------------------------------------
+alias zyp='zypper'
+alias zypup='zypper dup --allow-vendor-change && flatpak update -y'
+
+# -- FEDORA ---------------------------------------------------------------
+alias dnfup='sudo dnf upgrade --refresh && flatpak update -y'
+
+# -- BTRFS ------------------------------------------------------------
+alias btrfs-mount='sudo mount $(df --output=source / | tail -n 1) -o subvol=/ /mnt'
+alias btrfs-umount='sudo umount $(df --output=source / | tail -n 1) /mnt'
+# Using Fish variable, since $@ workaround is the .rc files.
+alias btrfs-rollback='sudo mv /mnt/@ /mnt/@_badroot && sudo btrfs subvolume snapshot /mnt/@.snapshots/$argv/snapshot /mnt/@'
+alias snapper-snap='sudo snapper create --type single --print-number --cleanup-algorithm number'
+
+# -- Linux Containers ------------------------------------------------------------
+alias "lxc enter"="lxc exec $1 bash"
+alias lxc='sudo incus'
+# -- SYSTEMD ------------------------------------------------------------
+# Using Fish variable, since $@ workaround is the .rc files.
+alias service-search='systemctl list-units | grep snapper $argv'
+
+# -- KITTY ------------------------------------------------------------
+#alias icat="kitty +kitten icat"
+#[ "$TERM" = "xterm-kitty" ] && alias ssh="kitty +kitten ssh"
+
+# -- DOCKER ------------------------------------------------------------
+alias Compose='docker-compose up -d && docker-compose logs -f'
+alias compose-up='docker-compose up -d --force-recreate && docker logs -f'
+alias compose-down='docker-compose down'
+alias vpncheck='python3 /STORAGE/docker/vpn-jackett-qbit/vpncheck.py'
+
+# -- RESETS ------------------------------------------------------------
+alias plasma-reset="DISPLAY=:0 kwin --replace ; sleep 2 ; plasmashell --replace &"
+alias pipewire-reset="killall pipewire ; sleep 2;  systemctl --user --now enable pipewire{,-pulse}.{socket,service}"
+
+# -- TERMUX ------------------------------------------------------------
+alias proot="proot-distro"

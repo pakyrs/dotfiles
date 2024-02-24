@@ -1,0 +1,78 @@
+# # ex - archive extractor
+# # usage: ex <file>
+ex ()
+{
+  if [ -f $1 ] ; then
+    case $1 in
+      *.tar.bz2)   tar xjf $1   ;;
+      *.tar.gz)    tar xzf $1   ;;
+      *.tar.xz)    tar xJf $1   ;;
+      *.bz2)       bunzip2 $1   ;;
+      *.rar)       unrar x $1   ;;
+      *.gz)        gunzip $1    ;;
+      *.tar)       tar xf $1    ;;
+      *.tbz2)      tar xjf $1   ;;
+      *.tgz)       tar xzf $1   ;;
+      *.zip)       unzip $1     ;;
+      *.Z)         uncompress $1;;
+      *.7z)        7z x $1      ;;
+      *.img.xz)    xz -d $1     ;;
+      *)           echo "'$1' cannot be extracted via ex()" ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+}
+
+# mv with progress
+mvpow() {
+    pv "$1" | printf "%q\n" | xargs -I{} mv {} "$2"
+}
+
+
+
+## Automatically open latest tmux session or create a new one
+#if command -v tmux >/dev/null 2>&1; then
+#  if [[ -z "$TMUX" ]]; then
+#    if tmux has-session >/dev/null 2>&1; then
+#      tmux attach-session -d
+#    else
+#      tmux new-session
+#    fi
+#  fi
+#fi
+
+# Check if ssh-agent is running
+if [ -z "$SSH_AUTH_SOCK" ] || [ ! -e "$SSH_AUTH_SOCK" ]; then
+    echo "Starting ssh-agent..."
+    eval "$(ssh-agent)"
+else
+    echo "ssh-agent is already running."
+fi
+# function for alias between opensuse and debian
+if (( $+commands[eza] )); then
+  alias ls='eza'
+elif (( $+commands[exa] )); then
+  alias ls='exa'
+fi
+
+# function for bat alias opensuse vs others
+if (( $+commands[bat] )); then
+  alias cat='bat -p --paging=never'
+elif (( $+commands[batcat] )); then
+  alias cat='batcat -p --paging=never'
+fi
+
+# function for FZF shortcuts to work on different distros
+if (( $+commands[pkg] )); then
+  source /data/data/com.termux/files/usr/share/fzf/completion.zsh
+  source /data/data/com.termux/files/usr/share/fzf/key-bindings.zsh
+elif (( $+commands[apt] )); then
+  source /usr/share/doc/fzf/examples/completion.zsh
+  source /usr/share/doc/fzf/examples/key-bindings.zsh
+elif (( $+commands[dnf] )); then
+  source /usr/share/fzf/shell/key-bindings.zsh
+elif (( $+commands[zypper] )); then
+  source /etc/zsh_completion.d/fzf-key-bindings
+fi
+

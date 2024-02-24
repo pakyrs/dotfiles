@@ -1,0 +1,25 @@
+startup_message off
+caption string "%?%F%{= Bk}%? %C%A %D %d-%m-%Y %{= kB} %t%= %?%F%{= Bk}%:%{= wk}%? %n "
+hardstatus alwayslastline
+hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m %{W}%c %{g}]'
+# mouse mode
+mousetrack on
+# Arrow keys to switch terminals (only works with X) 
+# Alt + left 
+bindkey ^[[1;3D prev 
+# Alt + right 
+bindkey ^[[1;3C next
+# start at screen 1
+bind c screen 1
+bind ^c screen 1
+bind 0 select 10                                                            
+screen 1
+# 256 colors
+term xterm-256colo
+# scroll bar
+termcapinfo xterm*|rxvt*|kterm*|Eterm* ti@:te@
+# visual bell OFF
+vbell off
+#These settings will allow Screen to use UTF-8 encoding and display colors properly. needed for clioboard
+defutf8 on
+attrcolor b ".I"
