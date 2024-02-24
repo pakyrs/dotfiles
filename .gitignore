@@ -1,0 +1,41 @@
+# Personal SSH configuration and keys
+.ssh/
+
+# GPG keys
+.gnupg/
+
+# Personal netrc file for automatic login to remote services
+.netrc
+
+# Private environment files
+.env
+.env.local
+
+# Configuration files that may contain sensitive information
+*.conf
+*.cfg
+
+# Database files
+*.db
+*.sql
+*.sqlite
+
+# Log files
+*.log
+
+# Backup files
+*.bak
+*.tmp
+*.swp
+
+# Directories used by password managers
+.password-store/
+.keypass/
+
+# Specific files containing sensitive information (examples)
+id_rsa
+id_ecdsa
+id_ed25519
+.aws/credentials
+.config/gcloud/
+.docker/config.json
