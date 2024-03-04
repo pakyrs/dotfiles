@@ -190,8 +190,5 @@ prompt_git_update_function() {
     esac
 }
 
-# Define the precmd hook function
-precmd() {
-    # Call prompt_for_function before each prompt
-    prompt_git_update_function
-}
+# ask
+prompt_git_update_function
