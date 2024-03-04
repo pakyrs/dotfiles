@@ -52,25 +52,8 @@ export MANPAGER="/usr/bin/less -s -M +Gg"       #standard linux
 # DRACULA THEME FOR ZSH SYNTAX HIGHLIGHTING
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main cursor)
 typeset -gA ZSH_HIGHLIGHT_STYLES
-# Default groupings per, https://spec.draculatheme.com, try to logically separate
-# possible ZSH_HIGHLIGHT_STYLES settings accordingly...?
-#
-# Italics not yet supported by zsh; potentially soon:
-#    https://github.com/zsh-users/zsh-syntax-highlighting/issues/432
-#    https://www.zsh.org/mla/workers/2021/msg00678.html
-# ... in hopes that they will, labelling accordingly with ,italic where appropriate
-#
 # Main highlighter styling: https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters/main.md
-#
-## General
-### Diffs
-### Markup
-## Classes
-## Comments
 ZSH_HIGHLIGHT_STYLES[comment]='fg=#6272A4'
-## Constants
-## Entitites
-## Functions/methods
 ZSH_HIGHLIGHT_STYLES[alias]='fg=#50FA7B'
 ZSH_HIGHLIGHT_STYLES[suffix-alias]='fg=#50FA7B'
 ZSH_HIGHLIGHT_STYLES[global-alias]='fg=#50FA7B'
