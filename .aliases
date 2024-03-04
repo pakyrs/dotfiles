@@ -23,8 +23,8 @@ alias ll='eza -lah --icons --color=always --group-directories-first'
 alias la='eza -ah --icons --color=always --group-directories-first'
 alias ls='eza -Sh --icons --color=always --group-directories-first'
 alias ip='ip --color=auto'
-# batcat
-#alias cat='batcat -p $@'
+# colorize cat
+alias cat="batcat --style=plain $@"
 alias qdbus='qdbus-qt5'
 alias trash='rm -rf ~/.local/share/Trash/*'
 # Colorize grep output (good for log files)
