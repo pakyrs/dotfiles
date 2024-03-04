@@ -49,8 +49,9 @@ alias Commitmain='git add .; git commit -m "Commit from $(hostname)"; git push -
 # -- WINE ------------------------------------------------------------
 alias winbox='flatpak run --command=bottles-cli com.usebottles.bottles run -b 'winbox' -e "$HOME/.var/app/com.usebottles.bottles/data/bottles/bottles/winbox/drive_c/users/$USER/Desktop/winbox64.exe"'
 
-# -- STOW ------------------------------------------------------------
-alias yapush='cd $HOME && yadm add . && yadm commit -m "from $(hostname)"; yadm push -f origin master'
+# -- YADM ------------------------------------------------------------
+# stage changes only for untracked files, commit and push
+alias yapush='yadm add -u && yadm commit -m "from $(hostname)"; yadm push -f origin master'
 #-- STOW ------------------------------------------------------------
 alias dotpull='cd $HOME/dotfiles && git pull && stow -v --target=$HOME --restow */ && cd -'
 alias dotpush='cd $HOME/dotfiles && Commitmaster && cd -'
