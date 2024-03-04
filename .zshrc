@@ -177,4 +177,21 @@ check_git_repo_status_and_sync() {
     fi
 }
 # add function call
-check_git_repo_status_and_sync
+#check_git_repo_status_and_sync
+
+# Define a function to ask for user input
+prompt_git_update_function() {
+    read -r "?Do you want to check dotfiles updates? [Y/n] " response
+    case $response in
+        [Yy]*)
+            check_git_repo_status_and_sync;;
+        *)
+            echo "dotfile check skipped...";;
+    esac
+}
+
+# Define the precmd hook function
+precmd() {
+    # Call prompt_for_function before each prompt
+    prompt_git_update_function
+}

@@ -42,13 +42,13 @@ mvpow() {
 #  fi
 #fi
 
-# Check if ssh-agent is running
-if [ -z "$SSH_AUTH_SOCK" ] || [ ! -e "$SSH_AUTH_SOCK" ]; then
-    echo "Starting ssh-agent..."
-    eval "$(ssh-agent)"
-else
-    echo "ssh-agent is already running."
-fi
+## Check if ssh-agent is running
+#if [ -z "$SSH_AUTH_SOCK" ] || [ ! -e "$SSH_AUTH_SOCK" ]; then
+#    echo "Starting ssh-agent..."
+#    eval "$(ssh-agent)"
+#else
+#    echo "ssh-agent is already running."
+#fi
 # function for alias between opensuse and debian
 if (( $+commands[eza] )); then
   alias ls='eza'
