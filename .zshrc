@@ -162,14 +162,8 @@ check_git_repo_status_and_sync() {
     # compare the status
     local_status=$(yadm status -uno)
 
-    # colors
-    red='\033[0;31m'
-    no_color='\033[0m'
-
     if [[ $local_status == *"behind"* ]]; then
         echo "Your branch is behind the remote branch, pulling changes..."
-	  behind_count=$(echo $local_status | grep -oP '(?<=Your branch is behind by )\d+')
-          echo -e "${red}Your branch is behind the remote branch by $behind_count commits, pulling changes...${no_color}"
             yadm pull
     elif [[ $local_status =~ (modified|added) ]]; then
         echo "Your branch is ahead of the remote branch. Consider pushing your changes."
@@ -182,6 +176,5 @@ check_git_repo_status_and_sync() {
         echo "Your branch is up-to-date with the remote branch."
     fi
 }
-
 # add function call
 check_git_repo_status_and_sync
