@@ -174,29 +174,31 @@ autoload -U compinit; compinit
 
 
 check_git_repo_status_and_sync() {
-    # Fetch the latest changes from the remote without merging
-    yadm fetch
+    # grab latest remote changes
+    yadm fetch --depth 1
+    # compare the status
+    local_status=$(yadm status -uno)
 
-    # Check the status of the local branch in comparison to the remote branch
-    local_status=$(yadm status)
+    # colors
+    red='\033[0;31m'
+    no_color='\033[0m'
 
     if [[ $local_status == *"behind"* ]]; then
         echo "Your branch is behind the remote branch, pulling changes..."
-        yadm pull
-    elif [[ $local_status == *"modified"* ]]; then
+	  behind_count=$(echo $local_status | grep -oP '(?<=Your branch is behind by )\d+')
+          echo -e "${red}Your branch is behind the remote branch by $behind_count commits, pulling changes...${no_color}"
+            yadm pull
+    elif [[ $local_status =~ (modified|added) ]]; then
         echo "Your branch is ahead of the remote branch. Consider pushing your changes."
         # Prompt for push
-        read "response?Do you want to push changes? (y/n): "
+        read "response? Do you want to push changes? (y/n): "
         if [[ $response =~ ^[Yy]$ ]]; then
             yadm add -u && yadm commit -m "from $HOSTNAME" && yadm push -f origin master
         fi
     else
         echo "Your branch is up-to-date with the remote branch."
     fi
-
-    # Return to the previous directory
-    cd -
 }
 
-# Add the function call at the end of the .zshrc file to execute it when a new shell session starts
+# add function call
 check_git_repo_status_and_sync
