@@ -171,3 +171,32 @@ source "$ZSH/zsh-autosuggestions/zsh-autosuggestions.zsh"
 fpath=($ZSH/zsh-completions/src $fpath)
 ## autoload compinit
 autoload -U compinit; compinit
+
+
+check_git_repo_status_and_sync() {
+    # Fetch the latest changes from the remote without merging
+    yadm fetch
+
+    # Check the status of the local branch in comparison to the remote branch
+    local_status=$(yadm status)
+
+    if [[ $local_status == *"behind"* ]]; then
+        echo "Your branch is behind the remote branch, pulling changes..."
+        yadm pull
+    elif [[ $local_status == *"modified"* ]]; then
+        echo "Your branch is ahead of the remote branch. Consider pushing your changes."
+        # Prompt for push
+        read "response?Do you want to push changes? (y/n): "
+        if [[ $response =~ ^[Yy]$ ]]; then
+            yadm add -u && yadm commit -m "from $HOSTNAME" && yadm push -f origin master
+        fi
+    else
+        echo "Your branch is up-to-date with the remote branch."
+    fi
+
+    # Return to the previous directory
+    cd -
+}
+
+# Add the function call at the end of the .zshrc file to execute it when a new shell session starts
+check_git_repo_status_and_sync
