@@ -2,17 +2,6 @@
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 # make sure it shows the full name instead of just ~ in the taskbar - helps with wmctrl
 
-########## ZAP ##################
-# Created by Zap installer
-[ -f "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh" ] && source "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh"
-plug "zsh-users/zsh-autosuggestions"
-plug "zap-zsh/supercharge"
-plug "zap-zsh/zap-prompt"
-plug "zsh-users/zsh-syntax-highlighting"
-# Load and initialise completion system
-autoload -Uz compinit
-compinit
-
 # Workaround to work with Fish and Bash - posix and non posix
 #argv=("$@")
 ## PROMPT
@@ -169,3 +158,16 @@ tx=36:"
 
 #fastfetch
 #python3 ~/sync/scripts/check_and_pull/check_and_pull.py
+
+# PLUGINS
+export ZSH=$HOME/.zsh
+# prompt
+source "$ZSH/spaceship/spaceship.zsh"
+# highlights
+source "$ZSH/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+# autosuggestions
+source "$ZSH/zsh-autosuggestions/zsh-autosuggestions.zsh"
+# ZSH Completions
+fpath=($ZSH/zsh-completions/src $fpath)
+## autoload compinit
+autoload -U compinit; compinit
