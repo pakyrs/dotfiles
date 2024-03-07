@@ -1,6 +1,8 @@
 # -- GENERAL ------------------------------------------------------------
 alias vi='nvim'
 alias vim='nvim'
+alias code='codium'
+alias co='code'
 alias hist='history | fzf'
 alias root="sudo su -"
 alias nodns='ping 8.8.8.8'
