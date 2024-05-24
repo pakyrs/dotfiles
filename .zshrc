@@ -1,12 +1,20 @@
-# If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:$PATH
-# make sure it shows the full name instead of just ~ in the taskbar - helps with wmctrl
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
 
-# Workaround to work with Fish and Bash - posix and non posix
-#argv=("$@")
-## PROMPT
-PS1='%F{#FF5555}%#%f(%B%F{#FF79C6}%n%f%b@%B%F{#BD93F9}%m%f%b)-[%B%F{#50FA7B}%~%f%b]-%F{#FF5555}%?%f
-'
+# PATHS
+# macos options to include brew paths
+if [[ -f "/opt/homebrew/bin/brew" ]] then
+  # If you're using macOS, you'll want this enabled
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+# load functions
+[ -f "$HOME/.functions" ] && source "$HOME/.functions"
+# load aliases
+[ -f "$HOME/.aliases" ] && source "$HOME/.aliases"
+
+## VARS
 # Quickemu
 export PATH="$HOME/scripts/quickemu:$PATH"
 # EDITORS - nvim for all
@@ -19,22 +27,121 @@ export LC_ALL="en_US.UTF-8"
 export LC_CTYPE="en_US.UTF-8"
 export LANG="en_US.UTF-8"
 
-## Functions
-#if [[ "$hostname" == "zoidberg" || "$hostname" == "bender" || "$hostname" == "zapp" || "$hostname" == "kif" ]]; then
-#    # If the hostname matches, execute the code in ~/.functions
-#    if [ -f ~/.functions ]; then
-#        . ~/.functions
-#    fi
-#fi
-#
-
-[ -f "$HOME/.functions" ] && source "$HOME/.functions"
-# ALIASES
-[ -f "$HOME/.aliases" ] && source "$HOME/.aliases"
-
 # enable tabbing of hidden folders and files
 setopt glob_dots
 
+# ZINIT - PACKAGE MANAGER
+# Where is zinit going to live? 
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+
+# Download Zinit, if it's not there yet
+if [ ! -d "$ZINIT_HOME" ]; then
+   mkdir -p "$(dirname $ZINIT_HOME)"
+   git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+fi
+
+# Source/Load zinit
+source "${ZINIT_HOME}/zinit.zsh"
+
+# POWERLEVEL10k - PROMPT
+# Add in Powerlevel10k
+zinit ice depth=1; zinit light romkatv/powerlevel10k
+
+# History
+HISTSIZE=10000
+HISTFILE=~/.zsh_history
+SAVEHIST=$HISTSIZE
+## erase any duplicate inside histfile
+HISTDUP=erase
+## append any command to hist file
+setopt appendhistory
+## share history across shells
+setopt sharehistory
+## ignore writing commands that start with space to histfile, good for sensitive info
+setopt hist_ignore_space
+## prevent any duplicate command to be saved in our history
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+## prevent duplicate to be shown in the search
+setopt hist_find_no_dups
+
+# Add in zsh plugins
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
+zinit light Aloxaf/fzf-tab
+
+# Completion styling
+## match case insensitive completion, ie d to match Downloads
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+## colored ls
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' menu no
+## preview pane for fzf
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+
+# Load completions
+autoload -Uz compinit; compinit
+## replay all cached completions
+zinit cdreplay -q
+
+# Add in snippets - to get OhMyZSH plugins https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/
+zinit snippet OMZP::git
+zinit snippet OMZP::sudo
+zinit snippet OMZP::archlinux
+zinit snippet OMZP::debian
+zinit snippet OMZP::docker-compose
+zinit snippet OMZP::docker
+zinit snippet OMZP::mosh
+zinit snippet OMZP::ssh-agent
+zinit snippet OMZP::command-not-found
+# theme
+
+
+# Aliases
+#alias ls='ls --color'
+alias vim='nvim'
+alias vi='nvim'
+
+alias ll='eza -lah --icons --color=always --group-directories-first'
+alias la='eza -ah --icons --color=always --group-directories-first'
+# alias ls='eza -Sh --icons --color=always --group-directories-first'
+# EZA / EXA shell integration
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  alias ls='eza -Sh --icons --color=always --group-directories-first'
+elif [[ -f /etc/debian_version ]]; then
+  # Debian
+  alias ls='exa' 
+elif [[ -f /etc/fedora-release ]]; then
+  # Fedora
+  alias ls='eza -Sh --icons --color=always --group-directories-first'
+elif [[ -f /etc/SuSE-release || -f /etc/SUSE-brand ]]; then
+  # SUSE
+  alias ls='eza -Sh --icons --color=always --group-directories-first'
+elif [[ "$(uname -o)" == "Android" ]]; then
+  # Termux
+  alias ls='eza -Sh --icons --color=always --group-directories-first'
+fi
+
+#### exa - Color Scheme Definitions Dracula Theme
+export EXA_COLORS="\
+uu=36:\
+gu=37:\
+sn=32:\
+sb=32:\
+da=34:\
+ur=34:\
+uw=35:\
+ux=36:\
+ue=36:\
+gr=34:\
+gw=35:\
+gx=36:\
+tr=34:\
+tw=35:\
+tx=36:"
 
 # DRACULA Manpager
 export MANPAGER="/usr/bin/less -s -M +Gg"       #standard linux
@@ -112,79 +219,28 @@ ZSH_HIGHLIGHT_STYLES[arg0]='fg=#F8F8F2'
 ZSH_HIGHLIGHT_STYLES[default]='fg=#F8F8F2'
 ZSH_HIGHLIGHT_STYLES[cursor]='standout'
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="dracula/dracula"
+# fzf shell integration
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  # macOS - fzf > 0.44
+  source <(fzf --zsh)
+elif [[ -f /etc/debian_version ]]; then
+  # Debian
+  source /usr/share/doc/fzf/examples/key-bindings.zsh
+  source /usr/share/doc/fzf/examples/completion.zsh
+elif [[ -f /etc/fedora-release ]]; then
+  # Fedora
+  source /usr/share/fzf/shell/key-bindings.zsh
+elif [[ -f /etc/SuSE-release || -f /etc/SUSE-brand ]]; then
+  # SUSE
+  source /etc/zsh_completion.d/fzf-key-bindings
+elif [[ "$(uname -o)" == "Android" ]]; then
+  # Termux
+  source /data/data/com.termux/files/usr/share/fzf/shell/key-bindings.zsh
+  source /data/data/com.termux/files/usr/share/fzf/shell/completion.zsh
+fi
 
-#### exa - Color Scheme Definitions Dracula Theme
-#### ------------------------------
+# load zoxide
+eval "$(zoxide init --cmd cd zsh)"
 
-export EXA_COLORS="\
-uu=36:\
-gu=37:\
-sn=32:\
-sb=32:\
-da=34:\
-ur=34:\
-uw=35:\
-ux=36:\
-ue=36:\
-gr=34:\
-gw=35:\
-gx=36:\
-tr=34:\
-tw=35:\
-tx=36:"
-
-
-#fastfetch
-#python3 ~/sync/scripts/check_and_pull/check_and_pull.py
-
-# PLUGINS
-export ZSH=$HOME/.zsh
-# prompt
-source "$ZSH/spaceship/spaceship.zsh"
-# highlights
-source "$ZSH/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
-# autosuggestions
-source "$ZSH/zsh-autosuggestions/zsh-autosuggestions.zsh"
-# ZSH Completions
-fpath=($ZSH/zsh-completions/src $fpath)
-## autoload compinit
-autoload -U compinit; compinit
-
-
-check_git_repo_status_and_sync() {
-    # grab latest remote changes
-    yadm fetch --depth 1
-    # compare the status
-    local_status=$(yadm status -uno)
-
-    if [[ $local_status == *"behind"* ]]; then
-        echo "Your branch is behind the remote branch, pulling changes..."
-            yadm pull
-    elif [[ $local_status =~ (modified|added) ]]; then
-        echo "Your branch is ahead of the remote branch. Consider pushing your changes."
-        # Prompt for push
-        read "response? Do you want to push changes? (y/n): "
-        if [[ $response =~ ^[Yy]$ ]]; then
-            yadm add -u && yadm commit -m "from $HOSTNAME" && yadm push -f origin master
-        fi
-    else
-        echo "Your branch is up-to-date with the remote branch."
-    fi
-}
-# function to ask for user input
-prompt_git_update_function() {
-    read -t 2 -r "?Do you want to check dotfiles updates? [Y/n] " response
-    case $response in
-        [Yy]*)
-            check_git_repo_status_and_sync;;
-        *)
-            echo "dotfile check skipped...";;
-    esac
-}
-# prompt
-prompt_git_update_function
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

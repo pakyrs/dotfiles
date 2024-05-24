@@ -49,30 +49,4 @@ mvpow() {
 #else
 #    echo "ssh-agent is already running."
 #fi
-# function for alias between opensuse and debian
-if (( $+commands[eza] )); then
-  alias ls='eza'
-elif (( $+commands[exa] )); then
-  alias ls='exa'
-fi
-
-# function for bat alias opensuse vs others
-if (( $+commands[bat] )); then
-  alias cat='bat -p --paging=never'
-elif (( $+commands[batcat] )); then
-  alias cat='batcat -p --paging=never'
-fi
-
-# function for FZF shortcuts to work on different distros
-if (( $+commands[pkg] )); then
-  source /data/data/com.termux/files/usr/share/fzf/completion.zsh
-  source /data/data/com.termux/files/usr/share/fzf/key-bindings.zsh
-elif (( $+commands[apt] )); then
-  source /usr/share/doc/fzf/examples/completion.zsh
-  source /usr/share/doc/fzf/examples/key-bindings.zsh
-elif (( $+commands[dnf] )); then
-  source /usr/share/fzf/shell/key-bindings.zsh
-elif (( $+commands[zypper] )); then
-  source /etc/zsh_completion.d/fzf-key-bindings
-fi
 
