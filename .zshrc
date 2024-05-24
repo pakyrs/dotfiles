@@ -69,6 +69,7 @@ setopt hist_find_no_dups
 # Add in zsh plugins
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
+#zinit light marlonrichert/zsh-autocomplete
 zinit light zsh-users/zsh-autosuggestions
 zinit light Aloxaf/fzf-tab
 
