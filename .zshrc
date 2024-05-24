@@ -235,8 +235,7 @@ elif [[ -f /etc/SuSE-release || -f /etc/SUSE-brand ]]; then
   source /etc/zsh_completion.d/fzf-key-bindings
 elif [[ "$(uname -o)" == "Android" ]]; then
   # Termux
-  source /data/data/com.termux/files/usr/share/fzf/shell/key-bindings.zsh
-  source /data/data/com.termux/files/usr/share/fzf/shell/completion.zsh
+  source <(fzf --zsh)
 fi
 
 # load zoxide
