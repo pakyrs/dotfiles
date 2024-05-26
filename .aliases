@@ -21,9 +21,6 @@ alias TR='tree -CL $@'
 alias ocr='flameshot gui --raw | tesseract stdin stdout | xclip -in -selection clipboard'
 alias flamecopy='flameshot gui --raw | wl-copy'
 ## Colorize outputs
-alias ll='eza -lah --icons --color=always --group-directories-first'
-alias la='eza -ah --icons --color=always --group-directories-first'
-alias ls='eza -Sh --icons --color=always --group-directories-first'
 alias ip='ip --color=auto'
 # colorize cat
 alias cat="batcat --style=plain $@"
