@@ -69,7 +69,7 @@ setopt hist_find_no_dups
 # Add in zsh plugins
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
-#zinit light marlonrichert/zsh-autocomplete
+zinit light marlonrichert/zsh-autocomplete
 zinit light zsh-users/zsh-autosuggestions
 zinit light Aloxaf/fzf-tab
 
@@ -106,24 +106,26 @@ zinit snippet OMZP::command-not-found
 alias vim='nvim'
 alias vi='nvim'
 
-alias ll='eza -lah --icons --color=always --group-directories-first'
-alias la='eza -ah --icons --color=always --group-directories-first'
-# alias ls='eza -Sh --icons --color=always --group-directories-first'
 # EZA / EXA shell integration
 if [[ "$OSTYPE" == "darwin"* ]]; then
   alias ls='eza -Sh --icons --color=always --group-directories-first'
+  alias ll='eza -lah --icons --color=always --group-directories-first'
 elif [[ -f /etc/debian_version ]]; then
   # Debian
-  alias ls='exa' 
+  alias ls='exa -Sh --icons --color=always --group-directories-first'
+  alias ll='exa -lah --icons --color=always --group-directories-first'
 elif [[ -f /etc/fedora-release ]]; then
   # Fedora
   alias ls='eza -Sh --icons --color=always --group-directories-first'
+  alias ll='eza -lah --icons --color=always --group-directories-first'
 elif [[ -f /etc/SuSE-release || -f /etc/SUSE-brand ]]; then
   # SUSE
   alias ls='eza -Sh --icons --color=always --group-directories-first'
+  alias ll='eza -lah --icons --color=always --group-directories-first'
 elif [[ "$(uname -o)" == "Android" ]]; then
   # Termux
   alias ls='eza -Sh --icons --color=always --group-directories-first'
+  alias ll='eza -lah --icons --color=always --group-directories-first'
 fi
 
 #### exa - Color Scheme Definitions Dracula Theme
