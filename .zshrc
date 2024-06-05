@@ -242,6 +242,7 @@ elif [[ "$(uname -o)" == "Android" ]]; then
 fi
 
 # load zoxide
+#eval "$(zoxide init --cmd cd zsh)"
 eval "$(zoxide init --cmd cd zsh)"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
