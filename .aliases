@@ -52,7 +52,7 @@ alias winbox='flatpak run --command=bottles-cli com.usebottles.bottles run -b 'w
 # stage changes only for untracked files, commit and push
 alias yapush='yadm add -u && yadm commit -m "from $(hostname)"; yadm push -f origin master'
 alias yastat='yadm fetch && yadm status'
-alias yapull='yadm pull'
+alias yapull='yadm fetch && yadm pull'
 
 #-- STOW ------------------------------------------------------------
 #alias dotpull='cd $HOME/dotfiles && git pull && stow -v --target=$HOME --restow */ && cd -'
