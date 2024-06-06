@@ -14,7 +14,7 @@ alias grep='grep --color=auto'
 alias killer='ps aux | fzf | awk "{print $2}" | xargs kill PID'
 alias fd='find . -type d -iname'
 alias ff='find . -type f -iname'
-alias lsblk='lsblk -f -o +SIZE,MODEL,SERIAL'
+alias lsblk="lsblk -d -o NAME,SIZE,MODEL,SERIAL | grep -v 'zd'"
 # tree with depth in mind
 alias TR='tree -CL $@'
 # OCR - FLAMESHOT
