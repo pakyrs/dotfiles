@@ -67,11 +67,11 @@ setopt hist_ignore_dups
 ## prevent duplicate to be shown in the search
 setopt hist_find_no_dups
 
-# Add in zsh plugins
+# ZINIT - PLUGINS Add in zsh plugins
 zinit light zsh-users/zsh-syntax-highlighting
-#zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-completions
 #zinit light marlonrichert/zsh-autocomplete
-#zinit light zsh-users/zsh-autosuggestions
+zinit light zsh-users/zsh-autosuggestions
 zinit light Aloxaf/fzf-tab
 
 # Completion styling
@@ -99,7 +99,6 @@ zinit snippet OMZP::docker
 zinit snippet OMZP::mosh
 zinit snippet OMZP::ssh-agent
 zinit snippet OMZP::command-not-found
-# theme
 
 
 # Aliases
@@ -224,7 +223,7 @@ ZSH_HIGHLIGHT_STYLES[cursor]='standout'
 
 # fzf shell integration
 if [[ "$OSTYPE" == "darwin"* ]] || [[ "$(uname -o)" == "Android" ]]; then
-  # macOS and termux - fzf > 0.44
+  # macOS or termux - fzf > 0.44
   source <(fzf --zsh)
 elif [[ -f /etc/debian_version ]]; then
   # Debian
@@ -240,7 +239,7 @@ fi
 
 # load zoxide
 #eval "$(zoxide init --cmd cd zsh)"
-eval "$(zoxide init --cmd cd zsh)"
+eval "$(zoxide init zsh)"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
