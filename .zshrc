@@ -237,9 +237,14 @@ elif [[ -f /etc/SuSE-release || -f /etc/SUSE-brand ]]; then
   source /etc/zsh_completion.d/fzf-key-bindings
 fi
 
-# load zoxide
-#eval "$(zoxide init --cmd cd zsh)"
-eval "$(zoxide init zsh)"
+# Only load Zoxide if the version installed is at least 0.9
+ZOX_VER=$(zoxide --version | cut -d ' ' -f 2 | cut -d '.' -f 1,2)
+if (( $(echo "$ZOX_VER >= 0.9" | bc -l) )); then
+    eval "$(zoxide init --cmd cd zsh)"
+else
+    :
+fi
+
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
