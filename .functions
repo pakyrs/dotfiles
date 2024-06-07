@@ -29,7 +29,16 @@ mvpow() {
     pv "$1" | printf "%q\n" | xargs -I{} mv {} "$2"
 }
 
-
+# apt search function
+if [[ -f /etc/debian_version ]]; then
+    apt() {
+        if [[ "$1" == "search" ]]; then
+            command apt search --names-only "${@:2}"
+        else
+            command apt "$@"
+        fi
+    }
+fi
 
 ## Automatically open latest tmux session or create a new one
 #if command -v tmux >/dev/null 2>&1; then

@@ -63,7 +63,6 @@ alias yapull='yadm fetch && yadm pull'
 # -- DEBIAN ------------------------------------------------------------
 alias aptup='sudo apt update -y && sudo apt dist-upgrade && flatpak update -y'
 alias aptrm='sudo apt remove --purge'
-#alias winbox='wine /home/pacadmin/Downloads/winbox64.exe'
 
 # -- SUSE ---------------------------------------------------------------
 alias zyp='zypper'
