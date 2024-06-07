@@ -238,7 +238,7 @@ elif [[ -f /etc/SuSE-release || -f /etc/SUSE-brand ]]; then
 fi
 
 # Only load Zoxide if the version installed is at least 0.9
-ZOX_VER=$(zoxide --version | cut -d ' ' -f 2 | cut -d '.' -f 1,2)
+ZOX_VER=$(zoxide --version | grep -oE '[0-9]+\.[0-9]+')
 if (( $(echo "$ZOX_VER >= 0.9" | bc -l) )); then
     eval "$(zoxide init --cmd cd zsh)"
 else
