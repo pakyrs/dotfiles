@@ -8,6 +8,7 @@ alias root="sudo su -"
 alias nodns='ping 8.8.8.8'
 alias dns='ping google.com'
 alias lip='ip -o -f inet -c a | awk "{print \$1,\$2,\$4}"'
+alias repocheck='function _openrepology() { xdg-open "https://repology.org/project/$1/versions"; }; _openrepology'
 # Using Fish variable, since $@ workaround is the .rc files.
 alias hostscan='nmap -sP $argv'
 alias grep='grep --color=auto'
