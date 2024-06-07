@@ -68,9 +68,9 @@ setopt hist_find_no_dups
 
 # Add in zsh plugins
 zinit light zsh-users/zsh-syntax-highlighting
-zinit light zsh-users/zsh-completions
-zinit light marlonrichert/zsh-autocomplete
-zinit light zsh-users/zsh-autosuggestions
+#zinit light zsh-users/zsh-completions
+#zinit light marlonrichert/zsh-autocomplete
+#zinit light zsh-users/zsh-autosuggestions
 zinit light Aloxaf/fzf-tab
 
 # Completion styling
@@ -247,3 +247,4 @@ eval "$(zoxide init --cmd cd zsh)"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+fpath=(~/.zsh.d/ $fpath)

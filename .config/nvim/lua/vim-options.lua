@@ -2,6 +2,7 @@ vim.cmd("set expandtab")
 vim.cmd("set tabstop=2")
 vim.cmd("set softtabstop=2")
 vim.cmd("set shiftwidth=2")
+-- set leader key to space
 vim.g.mapleader = " "
 vim.g.background = "light"
 
@@ -20,6 +21,20 @@ vim.opt.mouse = 'a'
 
 -- Enable clipboard support
 vim.opt.clipboard = 'unnamedplus'
+-- Key mapping to copy to system clipboard in normal mode
+vim.keymap.set('n', '<leader>c', '"+y$')
+-- Key mapping to copy to system clipboard in visual mode
+vim.keymap.set('v', '<leader>c', '"+y')
+-- OSC52 clipboard
+vim.api.nvim_create_autocmd('TextYankPost', {
+    callback = function()
+        vim.highlight.on_yank()
+        local copy_to_unnamedplus = require('vim.ui.clipboard.osc52').copy('+')
+        copy_to_unnamedplus(vim.v.event.regcontents)
+        local copy_to_unnamed = require('vim.ui.clipboard.osc52').copy('*')
+        copy_to_unnamed(vim.v.event.regcontents)
+    end
+})
 
 -- Set tab width and spaces
 vim.opt.tabstop = 4
