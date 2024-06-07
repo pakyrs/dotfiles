@@ -25,16 +25,16 @@ vim.opt.clipboard = 'unnamedplus'
 vim.keymap.set('n', '<leader>c', '"+y$')
 -- Key mapping to copy to system clipboard in visual mode
 vim.keymap.set('v', '<leader>c', '"+y')
--- OSC52 clipboard
-vim.api.nvim_create_autocmd('TextYankPost', {
-    callback = function()
-        vim.highlight.on_yank()
-        local copy_to_unnamedplus = require('vim.ui.clipboard.osc52').copy('+')
-        copy_to_unnamedplus(vim.v.event.regcontents)
-        local copy_to_unnamed = require('vim.ui.clipboard.osc52').copy('*')
-        copy_to_unnamed(vim.v.event.regcontents)
-    end
-})
+-- OSC52 clipboard - not working
+--vim.api.nvim_create_autocmd('TextYankPost', {
+--    callback = function()
+--        vim.highlight.on_yank()
+--        local copy_to_unnamedplus = require('vim.ui.clipboard.osc52').copy('+')
+--        copy_to_unnamedplus(vim.v.event.regcontents)
+--        local copy_to_unnamed = require('vim.ui.clipboard.osc52').copy('*')
+--        copy_to_unnamed(vim.v.event.regcontents)
+--    end
+--})
 
 -- Set tab width and spaces
 vim.opt.tabstop = 4

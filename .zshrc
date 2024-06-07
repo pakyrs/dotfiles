@@ -9,14 +9,15 @@ if [[ -f "/opt/homebrew/bin/brew" ]] then
   # If you're using macOS, you'll want this enabled
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
+
 # load functions
 [ -f "$HOME/.functions" ] && source "$HOME/.functions"
 # load aliases
 [ -f "$HOME/.aliases" ] && source "$HOME/.aliases"
 
 ## VARS
-# Quickemu
-export PATH="$HOME/scripts/quickemu:$PATH"
+export PATH="$HOME/scripts/quickemu:/opt/nvim-linux64/bin:$PATH"
+
 # EDITORS - nvim for all
 export EDITOR=nvim
 export VISUAL=$EDITOR
