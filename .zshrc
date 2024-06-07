@@ -3,22 +3,23 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# PATHS
+#              _   _       
+#   _ __  __ _| |_| |_  ___
+#  | '_ \/ _` |  _| ' \(_-<
+#  | .__/\__,_|\__|_||_/__/
+#  |_|                     
+#  
+#  
 # macos options to include brew paths
 if [[ -f "/opt/homebrew/bin/brew" ]] then
   # If you're using macOS, you'll want this enabled
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
-
-# load functions
-[ -f "$HOME/.functions" ] && source "$HOME/.functions"
-# load aliases
-[ -f "$HOME/.aliases" ] && source "$HOME/.aliases"
-
-## VARS
+#  __ ____ _ _ _ ___
+#  \ V / _` | '_(_-<
+#   \_/\__,_|_| /__/
+#                   
 export PATH="$HOME/scripts/quickemu:/opt/nvim-linux64/bin:$PATH"
-
-# EDITORS - nvim for all
 export EDITOR=nvim
 export VISUAL=$EDITOR
 export SYSTEMD_EDITOR=$EDITOR
@@ -27,28 +28,63 @@ export TERM=xterm-256color
 export LC_ALL="en_US.UTF-8"
 export LC_CTYPE="en_US.UTF-8"
 export LANG="en_US.UTF-8"
-
 # enable tabbing of hidden folders and files
 setopt glob_dots
-
-# ZINIT - PACKAGE MANAGER
+#      _      _ _   
+#   __(_)_ _ (_) |_ 
+#  |_ / | ' \| |  _|
+#  /__|_|_||_|_|\__|
+#                   
 # Where is zinit going to live? 
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
-
 # Download Zinit, if it's not there yet
 if [ ! -d "$ZINIT_HOME" ]; then
    mkdir -p "$(dirname $ZINIT_HOME)"
    git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 fi
-
 # Source/Load zinit
 source "${ZINIT_HOME}/zinit.zsh"
 
-# POWERLEVEL10k - PROMPT
-# Add in Powerlevel10k
+# ZINIT - PLUGINS - load under /lua/plugins
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-completions
+#zinit light marlonrichert/zsh-autocomplete
+zinit light zsh-users/zsh-autosuggestions
+zinit light Aloxaf/fzf-tab
+# Add in Powerlevel10k - PROMPT
 zinit ice depth=1; zinit light romkatv/powerlevel10k
 
-# History
+# ZINIT - SNIPPETS - to get OhMyZSH plugins https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/
+zinit snippet OMZP::git
+zinit snippet OMZP::sudo
+zinit snippet OMZP::archlinux
+zinit snippet OMZP::debian
+zinit snippet OMZP::docker-compose
+zinit snippet OMZP::docker
+zinit snippet OMZP::mosh
+zinit snippet OMZP::ssh-agent
+zinit snippet OMZP::command-not-found
+# zinit snippet OMZP::colored-man-pages # not needed
+
+# COMPLETION STYLING
+## match case insensitive completion, ie d to match Downloads
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+## colored ls
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' menu no
+## preview pane for fzf
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+# Load completions
+autoload -Uz compinit; compinit
+## replay all cached completions
+zinit cdreplay -q
+  
+#   _    _    _                
+#  | |_ (_)__| |_ ___ _ _ _  _ 
+#  | ' \| (_-<  _/ _ \ '_| || |
+#  |_||_|_/__/\__\___/_|  \_, |
+#                         |__/ 
 HISTSIZE=10000
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
@@ -67,46 +103,13 @@ setopt hist_ignore_dups
 ## prevent duplicate to be shown in the search
 setopt hist_find_no_dups
 
-# ZINIT - PLUGINS Add in zsh plugins
-zinit light zsh-users/zsh-syntax-highlighting
-zinit light zsh-users/zsh-completions
-#zinit light marlonrichert/zsh-autocomplete
-zinit light zsh-users/zsh-autosuggestions
-zinit light Aloxaf/fzf-tab
-
-# Completion styling
-## match case insensitive completion, ie d to match Downloads
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-## colored ls
-zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-zstyle ':completion:*' menu no
-## preview pane for fzf
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
-zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
-
-# Load completions
-autoload -Uz compinit; compinit
-## replay all cached completions
-zinit cdreplay -q
-
-# Add in snippets - to get OhMyZSH plugins https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/
-zinit snippet OMZP::git
-zinit snippet OMZP::sudo
-zinit snippet OMZP::archlinux
-zinit snippet OMZP::debian
-zinit snippet OMZP::docker-compose
-zinit snippet OMZP::docker
-zinit snippet OMZP::mosh
-zinit snippet OMZP::ssh-agent
-zinit snippet OMZP::command-not-found
-
-
-# Aliases
-#alias ls='ls --color'
-alias vim='nvim'
-alias vi='nvim'
-
-
+#        _ _                 
+#   __ _| (_)__ _ ___ ___ ___
+#  / _` | | / _` (_-</ -_|_-<
+#  \__,_|_|_\__,_/__/\___/__/
+#                            
+#  
+[ -f "$HOME/.aliases" ] && source "$HOME/.aliases"
 # EZA / EXA shell integration
 set_aliases() {
   alias ls='eza -Sh --icons --color=always --group-directories-first'
@@ -124,8 +127,22 @@ else
     set_aliases
   fi
 fi
-
-#### exa - Color Scheme Definitions Dracula Theme
+#    __              _   _             
+#   / _|_  _ _ _  __| |_(_)___ _ _  ___
+#  |  _| || | ' \/ _|  _| / _ \ ' \(_-<
+#  |_|  \_,_|_||_\__|\__|_\___/_||_/__/
+#  
+[ -f "$HOME/.functions" ] && source "$HOME/.functions"
+#  
+#   _   _                     
+#  | |_| |_  ___ _ __  ___ ___
+#  |  _| ' \/ -_) '  \/ -_|_-<
+#   \__|_||_\___|_|_|_\___/__/
+#                             
+#
+#### BAT / BATCAT
+export BAT_THEME="Dracula"
+#### EXA - Color Scheme Definitions Dracula Theme
 export EXA_COLORS="\
 uu=36:\
 gu=37:\
@@ -142,15 +159,31 @@ gx=36:\
 tr=34:\
 tw=35:\
 tx=36:"
+#### EZA - Color Scheme Definitions Dracula Theme
+export EZA_COLORS="\
+uu=36:\
+gu=37:\
+sn=32:\
+sb=32:\
+da=34:\
+ur=34:\
+uw=35:\
+ux=36:\
+ue=36:\
+gr=34:\
+gw=35:\
+gx=36:\
+tr=34:\
+tw=35:\
+tx=36:"
 
-# DRACULA Manpager
+# DRACULA Manpager - ANSI16 color palette
 export MANPAGER="/usr/bin/less -s -M +Gg"       #standard linux
 #export MANPAGER="/opt/homebrew/bin/less -s -M +Gg" #M1 macOS
-#man-page colors
         export LESS_TERMCAP_mb=$'\e[1;31m'      # begin bold
-        export LESS_TERMCAP_md=$'\e[1;34m'      # begin blink
+        export LESS_TERMCAP_md=$'\e[1;92m'      # begin blink (Green)
         export LESS_TERMCAP_so=$'\e[01;45;37m'  # begin reverse video
-        export LESS_TERMCAP_us=$'\e[01;36m'     # begin underline
+        export LESS_TERMCAP_us=$'\e[01;93m'     # begin underline (Pink)
         export LESS_TERMCAP_me=$'\e[0m'         # reset bold/blink
         export LESS_TERMCAP_se=$'\e[0m'         # reset reverse video
         export LESS_TERMCAP_ue=$'\e[0m'         # reset underline
@@ -219,9 +252,13 @@ ZSH_HIGHLIGHT_STYLES[arg0]='fg=#F8F8F2'
 ZSH_HIGHLIGHT_STYLES[default]='fg=#F8F8F2'
 ZSH_HIGHLIGHT_STYLES[cursor]='standout'
 
-
-
-# fzf shell integration
+#      _        _ _   _     _                     _   _             
+#   __| |_  ___| | | (_)_ _| |_ ___ __ _ _ _ __ _| |_(_)___ _ _  ___
+#  (_-< ' \/ -_) | | | | ' \  _/ -_) _` | '_/ _` |  _| / _ \ ' \(_-<
+#  /__/_||_\___|_|_| |_|_||_\__\___\__, |_| \__,_|\__|_\___/_||_/__/
+#                                  |___/                            
+#  
+# FZF - shell integration
 if [[ "$OSTYPE" == "darwin"* ]] || [[ "$(uname -o)" == "Android" ]]; then
   # macOS or termux - fzf > 0.44
   source <(fzf --zsh)
@@ -237,14 +274,14 @@ elif [[ -f /etc/SuSE-release || -f /etc/SUSE-brand ]]; then
   source /etc/zsh_completion.d/fzf-key-bindings
 fi
 
-# Only load Zoxide if the version installed is at least 0.9
-ZOX_VER=$(zoxide --version | grep -oE '[0-9]+\.[0-9]+')
+# ZOXIDE - load if the version installed is at least 0.9
+ZOX_VER=$(zoxide --version | grep -oE '[0-9]+\.[0-9]+') # normalize output
 if (( $(echo "$ZOX_VER >= 0.9" | bc -l) )); then
     eval "$(zoxide init --cmd cd zsh)"
 else
-    :
+    : #nothing
 fi
 
-
+# PowerLevel10k, needs to be at the end
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
