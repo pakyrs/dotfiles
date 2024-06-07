@@ -107,26 +107,23 @@ zinit snippet OMZP::command-not-found
 alias vim='nvim'
 alias vi='nvim'
 
+
 # EZA / EXA shell integration
-if [[ "$OSTYPE" == "darwin"* ]]; then
+set_aliases() {
   alias ls='eza -Sh --icons --color=always --group-directories-first'
   alias ll='eza -lah --icons --color=always --group-directories-first'
+}
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  set_aliases
+# Debian stable lacks the new eza
 elif [[ -f /etc/debian_version ]]; then
-  # Debian
   alias ls='exa -Sh --icons --color=always --group-directories-first'
   alias ll='exa -lah --icons --color=always --group-directories-first'
-elif [[ -f /etc/fedora-release ]]; then
-  # Fedora
-  alias ls='eza -Sh --icons --color=always --group-directories-first'
-  alias ll='eza -lah --icons --color=always --group-directories-first'
-elif [[ -f /etc/SuSE-release || -f /etc/SUSE-brand ]]; then
-  # SUSE
-  alias ls='eza -Sh --icons --color=always --group-directories-first'
-  alias ll='eza -lah --icons --color=always --group-directories-first'
-elif [[ "$(uname -o)" == "Android" ]]; then
-  # Termux
-  alias ls='eza -Sh --icons --color=always --group-directories-first'
-  alias ll='eza -lah --icons --color=always --group-directories-first'
+else
+  if [[ -f /etc/fedora-release || -f /etc/SuSE-release || -f /etc/SUSE-brand || "$(uname -o)" == "Android" ]]; then
+    set_aliases
+  fi
 fi
 
 #### exa - Color Scheme Definitions Dracula Theme
@@ -223,9 +220,11 @@ ZSH_HIGHLIGHT_STYLES[arg0]='fg=#F8F8F2'
 ZSH_HIGHLIGHT_STYLES[default]='fg=#F8F8F2'
 ZSH_HIGHLIGHT_STYLES[cursor]='standout'
 
+
+
 # fzf shell integration
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  # macOS - fzf > 0.44
+if [[ "$OSTYPE" == "darwin"* ]] || [[ "$(uname -o)" == "Android" ]]; then
+  # macOS and termux - fzf > 0.44
   source <(fzf --zsh)
 elif [[ -f /etc/debian_version ]]; then
   # Debian
@@ -237,9 +236,6 @@ elif [[ -f /etc/fedora-release ]]; then
 elif [[ -f /etc/SuSE-release || -f /etc/SUSE-brand ]]; then
   # SUSE
   source /etc/zsh_completion.d/fzf-key-bindings
-elif [[ "$(uname -o)" == "Android" ]]; then
-  # Termux
-  source <(fzf --zsh)
 fi
 
 # load zoxide
@@ -248,4 +244,3 @@ eval "$(zoxide init --cmd cd zsh)"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-fpath=(~/.zsh.d/ $fpath)
