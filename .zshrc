@@ -51,6 +51,8 @@ zinit light zsh-users/zsh-completions
 #zinit light marlonrichert/zsh-autocomplete
 zinit light zsh-users/zsh-autosuggestions
 zinit light Aloxaf/fzf-tab
+# GRC - colorize plugin
+#zinit light unixorn/warhol.plugin.zsh
 # Add in Powerlevel10k - PROMPT
 zinit ice depth=1; zinit light romkatv/powerlevel10k
 
@@ -282,6 +284,7 @@ else
     : #nothing
 fi
 
+#source /etc/grc.zsh
 # PowerLevel10k, needs to be at the end
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

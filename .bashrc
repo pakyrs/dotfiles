@@ -102,7 +102,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
-
+source /etc/grc.bash
 # FZF history
 source /usr/share/doc/fzf/examples/key-bindings.bash
 source /usr/share/doc/fzf/examples/completion.bash
