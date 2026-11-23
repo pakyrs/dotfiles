@@ -1,0 +1,4 @@
+.DS_Store
+*.secret
+**/.ssh/id_*
+!**/.ssh/id_*.pub
