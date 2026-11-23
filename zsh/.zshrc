@@ -42,14 +42,17 @@
 #  AFTER EDITING:        zsh -n ~/.zshrc && source ~/.zshrc
 #  UPDATE PLUGINS:       for p in ~/.zsh/plugins/*; do git -C "$p" pull; done
 #
+#
 #  SECTIONS
-#   1. Environment variables        8. Hooks (on cd)
-#   2. OS detection                 9. Aliases: regular
-#   3. Shell options & history     10. Aliases: suffix
-#   4. Completion                  11. Aliases: global
-#   5. Key bindings (built-in)     12. zmv (batch rename)
-#   6. Custom widgets              13. Named directories
-#   7. Snippet hotkeys             14. Plugins, prompt & tools (keep last)
+#   1. Environment variables        9. Aliases: regular
+#   2. OS detection                10. Aliases: suffix
+#   3. Shell options & history     11. Aliases: global
+#   4. Completion                  12. zmv (batch rename)
+#   5. Key bindings (built-in)     13. Named directories
+#   6. Custom widgets              14. Dotfiles sync check
+#   7. Snippet hotkeys             15. Plugins, prompt & tools (keep last)
+#   8. Hooks (on cd)
+#
 #
 # ==============================================================================
 
@@ -391,9 +394,37 @@ hash -d dots=~/dotfiles
 hash -d dl=~/Downloads
 hash -d sync=~/Sync
 
+# ------------------------------------------------------------------------------
+# 14. DOTFILES SYNC CHECK (runs once when a terminal opens)
+# ------------------------------------------------------------------------------
+# Silent when everything is in sync. Otherwise prints one of:
+#   dotfiles: behind 2            -> TYPE: cd ~dots && git pull
+#   dotfiles: ahead 1             -> TYPE: cd ~dots && git push
+#   dotfiles: ahead 1, behind 2   -> TYPE: cd ~dots && git pull   (then push)
+#   dotfiles: uncommitted changes -> TYPE: cd ~dots && git status
+# Uses git -C instead of cd so the section 8 hooks don't fire.
+# Gives up after 3 seconds with no network, and never asks for a passphrase.
+
+dotfiles_check() {
+  local repo=~/dotfiles
+  [[ -d $repo/.git ]] || return
+
+  GIT_SSH_COMMAND='ssh -o ConnectTimeout=3 -o BatchMode=yes' \
+    git -C $repo fetch -q 2>/dev/null
+
+  local branch_line=$(git -C $repo status -sb 2>/dev/null | head -1)
+  if [[ $branch_line == *\[* ]]; then
+    echo "dotfiles: ${${branch_line#*\[}%\]}"
+  fi
+
+  if [[ -n $(git -C $repo status --porcelain 2>/dev/null) ]]; then
+    echo "dotfiles: uncommitted changes"
+  fi
+}
+dotfiles_check
 
 # ------------------------------------------------------------------------------
-# 14. PLUGINS, PROMPT & TOOLS (keep at the end, in this exact order)
+# 15. PLUGINS, PROMPT & TOOLS (keep at the end, in this exact order)
 # ------------------------------------------------------------------------------
 #   1. autosuggestions   2. starship   3. zoxide   4. syntax highlighting (LAST)
 # Each one only loads if it's installed, so a missing tool won't cause errors.
